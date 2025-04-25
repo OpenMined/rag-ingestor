@@ -8,7 +8,7 @@ uv venv -p 3.12 .venv1
 uv pip install -e .
 
 # Configuration
-EMBEDDER_PORT=8000
+EMBEDDER_PORT=8002
 INDEXER_PORT=8001
 QDRAINT_PORT=6333
 
