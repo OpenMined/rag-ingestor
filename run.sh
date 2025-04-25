@@ -4,7 +4,7 @@ set -e
 
 # Create and activate virtual environment
 uv venv -p 3.12 .venv1
-source .venv1/bin/activate
+. .venv1/bin/activate
 uv pip install -e .
 
 # Configuration
