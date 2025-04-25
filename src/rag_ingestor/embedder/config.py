@@ -8,7 +8,7 @@ class EmbedderSettings(BaseSettings):
 
     # Service settings
     host: str = Field(default="0.0.0.0", description="Host for the embedder service")
-    port: int = Field(default=8000, description="Port for the embedder service")
+    port: int = Field(default=8002, description="Port for the embedder service")
 
     # Application info
     app_name: str = Field(
