@@ -60,8 +60,8 @@ wait_for_service() {
     return 1
 }
 
-# Trap Ctrl+C and call cleanup
-trap cleanup SIGINT SIGTERM
+# Set up signal handlers
+trap 'cleanup' 2 15  # 2 is SIGINT, 15 is SIGTERM
 
 # Check if required ports are available
 check_port $EMBEDDER_PORT "Embedder"
