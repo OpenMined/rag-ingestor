@@ -90,7 +90,7 @@ class IndexerService(IndexerServiceInterface):
     def search(
         self,
         query_vector: List[float],
-        top_k: int = None,
+        top_k: Optional[int] = None,
         filter: Optional[Union[Dict[str, Any], SearchFilter]] = None,
         **kwargs,
     ) -> List[SearchResult]:
@@ -134,6 +134,32 @@ class IndexerService(IndexerServiceInterface):
             return results
         except Exception as e:
             logger.error(f"Error searching for embeddings: {str(e)}")
+            raise
+
+    def count(self, filter_dict: Union[Dict[str, Any], SearchFilter]) -> int:
+        """
+        Count embeddings by metadata.
+
+        Args:
+            filter_dict: Dictionary with metadata fields to filter by
+
+        Returns:
+            int: Number of embeddings matching the filter
+        """
+        try:
+            # Convert dict filter to SearchFilter if needed
+            search_filter = None
+            if isinstance(filter_dict, dict):
+                search_filter = SearchFilter(exact_filters=filter_dict)
+            else:
+                search_filter = filter_dict
+
+            # Use the vector_db to count
+            count = self.vector_db.count(search_filter)
+
+            return count
+        except Exception as e:
+            logger.error(f"Error counting embeddings: {str(e)}")
             raise
 
     def delete_embeddings(self, ids: List[Union[str, UUID]]) -> Dict[str, Any]:

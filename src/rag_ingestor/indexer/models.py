@@ -177,3 +177,17 @@ class IndexerStats(BaseModel):
     database_type: Optional[str] = Field(
         None, description="Type of the vector database"
     )
+
+
+class CountRequest(BaseModel):
+    """Request model for counting embeddings."""
+
+    filter: Union[Dict[str, Any], SearchFilter] = Field(
+        ..., description="Filter to apply for counting"
+    )
+
+
+class CountResponse(BaseModel):
+    """Response model for count operation."""
+
+    count: int = Field(..., description="Number of embeddings matching the filter")
