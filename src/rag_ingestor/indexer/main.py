@@ -14,6 +14,8 @@ from rag_ingestor.indexer.models import (
     SearchRequest,
     SearchResponse,
     IndexerStats,
+    CountRequest,
+    CountResponse,
 )
 from rag_ingestor.indexer.service import IndexerService
 
@@ -75,6 +77,19 @@ async def index_embeddings(request: IndexRequest) -> IndexResponse:
         return IndexResponse(**result)
     except Exception as e:
         logger.error(f"Error in index_embeddings: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.post("/count", response_model=CountResponse)
+async def count_embeddings(request: CountRequest) -> CountResponse:
+    """
+    Count embeddings by metadata.
+    """
+    try:
+        count = indexer_service.count(request.filter)
+        return CountResponse(count=count)
+    except Exception as e:
+        logger.error(f"Error in count_embeddings: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
 
 
